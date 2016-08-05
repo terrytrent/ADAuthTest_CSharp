@@ -1,4 +1,4 @@
-# AD Authentication Test using C#
+# AD Authentication Test using C*#*
 
 ##Console application testing AD Authentication.
 
