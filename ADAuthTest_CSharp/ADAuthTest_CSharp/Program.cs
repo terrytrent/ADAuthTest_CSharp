@@ -96,16 +96,17 @@ namespace ADAuthTest_CSharp
         static string getLdapServer()
         {
             Domain localDomain = Domain.GetCurrentDomain();
+            string localDomainAsString = localDomain.ToString();
 
             DnsQueryRequest request = new DnsQueryRequest();
-            DnsQueryResponse Response = request.Resolve($"_ldap.{localDomain.ToString()}", NsType.A, NsClass.ANY, System.Net.Sockets.ProtocolType.Udp);
+            DnsQueryResponse Response = request.Resolve($"_ldap.{localDomainAsString}", NsType.A, NsClass.ANY, System.Net.Sockets.ProtocolType.Udp);
 
             string answer = Response.AuthoritiveNameServers[0].Answer;
 
-            int indexOfDomain = answer.IndexOf($".{localDomain.ToString()}");
+            int indexOfDomain = answer.IndexOf($".{localDomainAsString}");
             int lengthToSkip = 20;
             int lengthOfLdapServer = indexOfDomain - lengthToSkip;
-            string nameOfLdapServer = $"{answer.Substring(lengthToSkip, lengthOfLdapServer)}.{localDomain.ToString()}";
+            string nameOfLdapServer = $"{answer.Substring(lengthToSkip, lengthOfLdapServer)}.{localDomainAsString}";
             return nameOfLdapServer;
         }
     }
